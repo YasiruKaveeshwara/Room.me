@@ -16,7 +16,15 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === "test@visionexdigital.com.au" && password === "password123") {
+
+    const storedUser = localStorage.getItem("registeredUser");
+    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+
+    const isHardcoded = email === "test@visionexdigital.com.au" && password === "password123";
+
+    const isRegisteredUser = parsedUser && email === parsedUser.email && password === parsedUser.password;
+
+    if (isHardcoded || isRegisteredUser) {
       login();
       toast.success("Login successful!");
       router.push("/dashboard");
@@ -24,13 +32,6 @@ export default function LoginPage() {
       toast.error("Invalid email or password");
     }
   };
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => setError(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
 
   return (
     <div className='h-screen w-screen bg-gray-100 overflow-hidden'>
@@ -66,7 +67,6 @@ export default function LoginPage() {
                 required
               />
             </div>
-            {error && <p className='text-red-400 text-sm'>{error}</p>}
             <button type='submit' className='bg-gradient-to-r text-sm h-9 from-purple-500 to-indigo-500 py-2 rounded font-semibold'>
               Sign in
             </button>
@@ -131,7 +131,6 @@ export default function LoginPage() {
                     required
                   />
                 </div>
-                {error && <p className='text-red-400 text-sm'>{error}</p>}
                 <button
                   type='submit'
                   className='bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 text-sm h-9 py-2 px-4 rounded-md font-semibold shadow-md hover:shadow-lg'>

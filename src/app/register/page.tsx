@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import TestimonialPanel from "../components/testimonialsPanel";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -15,19 +16,13 @@ export default function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password) {
-      setError("All fields are required");
+      toast.error("All fields are required!");
       return;
     }
     localStorage.setItem("registeredUser", JSON.stringify({ name, email, password }));
+    toast.success("Registration successful!");
     router.push("/login");
   };
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => setError(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
 
   return (
     <div className='h-screen w-screen bg-gray-100 overflow-hidden'>
@@ -74,7 +69,6 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            {error && <p className='text-red-400 text-sm'>{error}</p>}
             <button type='submit' className='bg-gradient-to-r text-sm h-9 from-purple-500 to-indigo-500 py-2 rounded font-semibold'>
               Register
             </button>
@@ -138,7 +132,6 @@ export default function RegisterPage() {
                     required
                   />
                 </div>
-                {error && <p className='text-red-400 text-sm'>{error}</p>}
                 <button
                   type='submit'
                   className='bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 text-sm h-9 py-2 px-4 rounded-md font-semibold shadow-md hover:shadow-lg'>
