@@ -16,15 +16,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const storedUser = localStorage.getItem("registeredUser");
-    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
-
-    const isHardcoded = email === "test@visionexdigital.com.au" && password === "password123";
-
-    const isRegisteredUser = parsedUser && email === parsedUser.email && password === parsedUser.password;
-
-    if (isHardcoded || isRegisteredUser) {
+    if (email === "test@visionexdigital.com.au" && password === "password123") {
       login();
       toast.success("Login successful!");
       router.push("/dashboard");

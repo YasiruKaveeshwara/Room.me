@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
